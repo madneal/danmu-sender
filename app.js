@@ -4,29 +4,41 @@ var newDiv = addNewDiv();
 mainbody.appendChild(newDiv);
 function addNewDiv() {
 	var newDiv = document.createElement('div');
-	var innerHtml = '<label value="设置次数" style="display:block;"></label>' +
-					'<input type="text" id="send-times" style="display:block; placeholder="设置弹幕发送次数"">' +
-					'<input type="button" value="设置"" id="set-btn">';
+	var innerHtml = '<input type="text" id="danmu-content" style="display:block;margin:5px;" placeholder="设置弹幕内容">' +
+					'<input type="text" id="send-times" style="display:block;margin:5px;" placeholder="设置弹幕发送次数">' +
+					'<input type="button" value="设置" id="set-btn" style="margin:5px;">' +
+					'<input type="button" value="取消" id="cancel-btn" style="margin:5px;">';
 	newDiv.innerHTML = innerHtml
 	newDiv.setAttribute('id', 'send-danmu');
-	newDiv.setAttribute('style', 'z-index:9999;width:200px;height:150px;position:fixed;right:10%;top:50%');
+	newDiv.setAttribute('style', 'z-index:9999;width:200px;height:150px;position:fixed;right:10%;top:50%;background:lightgray;');
 	return newDiv;
 }
 
 var btn = document.getElementById('set-btn');
+var cancelBtn = document.getElementById('cancel-btn');
+
+var isCancel = false;
 btn.addEventListener('click', function() {
 	var times = +document.getElementById('send-times').value;
-	console.log('have add listener');
-	console.log('the time is' + times);
+	var danmuContent = document.getElementById('danmu-content').value;
+	var timer;
 	for (var i = 0; i < times; i ++) {
-		console.log(times);
-	  (function(i) {
-	    setTimeout(function() {
-	      console.log(i);
-	      document.getElementById('js-send-msg').childNodes[1].value = '凸凸凸凸凸凸凸凸凸凸凸道歉' + i;
-	      document.getElementById('js-send-msg').childNodes[5].click();
-	    }, i * 10000);
-	  })(i);
+		cancelBtn.addEventListener('click', function() {
+			isCancel = true;
+			times = 0;
+			document.getElementById('danmu-content').value = '';
+			clearTimeout(timer);
+		})
+		if (!isCancel) {
+			(function(i) {
+			  timer = setTimeout(function() {
+			    console.log(i);
+			    document.getElementById('js-send-msg').childNodes[1].value = danmuContent + i;
+			    document.getElementById('js-send-msg').childNodes[5].click();
+			  }, i * 10000);
+			})(i);
+		}
+
 	}
 })
 
