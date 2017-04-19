@@ -10,7 +10,7 @@ function addNewDiv() {
 					'<input type="button" value="取消" id="cancel-btn" style="margin:5px;">';
 	newDiv.innerHTML = innerHtml
 	newDiv.setAttribute('id', 'send-danmu');
-	newDiv.setAttribute('style', 'z-index:9999;width:200px;height:150px;position:fixed;right:10%;top:50%;background:lightgray;');
+	newDiv.setAttribute('style', 'z-index:9999;width:8%;height:12%;position:fixed;right:0;top:50%;background:lightgray;opacity:0.6;');
 	return newDiv;
 }
 
